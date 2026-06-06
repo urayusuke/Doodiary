@@ -32,6 +32,7 @@
 | バックエンド | Supabase（PostgreSQL + Auth + Edge Functions） |
 | AI分析 | Claude API（Haiku 4.5） |
 | 課金 | RevenueCat（アプリ内課金） |
+| Analytics | Firebase Analytics |
 | ルーティング | go_router |
 | モデル | Freezed |
 | バージョン管理 | fvm（Flutter Version Manager） |
