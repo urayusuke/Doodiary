@@ -34,6 +34,15 @@
 | 課金 | RevenueCat（アプリ内課金） |
 | ルーティング | go_router |
 | モデル | Freezed |
+| バージョン管理 | fvm（Flutter Version Manager） |
+
+### Flutterバージョン方針
+
+- **fvmでバージョン固定**。プロジェクトルートの `.fvm/fvm_config.json` が基準
+- **実装前に `flutter-pro` スキルで最新stableを確認**し、バージョンアップが必要か検討する
+- **パッケージ更新は `flutter pub outdated` で確認**してから意図的に上げる
+- メジャーバージョンアップは破壊的変更を確認してから。マイナーは都度検討
+- チャンネルは **stable 固定**（beta/master は使わない）
 
 ---
 
