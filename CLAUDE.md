@@ -28,7 +28,7 @@
 |---|---|
 | フロントエンド | Flutter（iOS / Android） |
 | 状態管理 | Riverpod + riverpod_annotation |
-| ローカルDB | Isar |
+| ローカルDB | Drift（SQLite） |
 | バックエンド | Supabase（PostgreSQL + Auth + Edge Functions） |
 | AI分析 | Claude API（Haiku 4.5） |
 | 課金 | RevenueCat（アプリ内課金） |
@@ -72,7 +72,7 @@ lib/
 | レイヤー | 責務 | 書いてはいけないもの |
 |---|---|---|
 | `models/` | Freezedデータ構造のみ | ビジネスロジック・Supabase依存 |
-| `repository/` | Supabase CRUD | 状態管理・UI |
+| `repository/` | Supabase / Drift CRUD | 状態管理・UI |
 | `state/` | StateクラスとNotifier（1ファイル） | Supabase直接操作・UI |
 | `screens/` | UIの描画のみ | ロジック・Supabase操作 |
 
@@ -194,7 +194,7 @@ Phase 1（MVP）
 ├── ディレクトリ構成・依存パッケージ
 ├── 気分入力UI（スライダー）
 ├── Supabase セットアップ・Auth
-├── Isar ローカル保存
+├── Drift ローカル保存
 └── レーダーチャート表示
 
 Phase 2
