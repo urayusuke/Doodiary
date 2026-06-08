@@ -15,12 +15,25 @@ abstract final class AppAxes {
 }
 
 enum Axis7 {
+  /// 今日どれだけ活動的・行動的なエネルギーを感じているか
   energy,
+
+  /// 気分の波が穏やかで安定しているか、乱高下しているか
   stability,
+
+  /// 人と関わりたい気持ちの強さ。内向き↔外向きの度合い
   sociability,
+
+  /// 自分を肯定できているか。自己批判が強くないか
   selfEsteem,
+
+  /// ストレスの重さ・圧迫感。高いほど負荷が大きい（他軸と方向が逆）
   stressLoad,
+
+  /// 複数の感情が混在しているか。単純な感情か複雑か
   complexity,
+
+  /// 感情全体がポジティブ寄りか、ネガティブ寄りか
   positivity;
 
   String get label {
