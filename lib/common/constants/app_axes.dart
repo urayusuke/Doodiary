@@ -3,6 +3,8 @@
 /// 順序はレーダーチャートの頂点配置順（時計回り、真上から）。
 /// キー名はSupabase/Driftのカラム名と一致させる。
 abstract final class AppAxes {
+  /// レーダーチャートの頂点配置順（時計回り・真上から）。
+  /// Axis7.values と順序が異なる場合があるため、描画はこちらを参照する。
   static const List<Axis7> all = [
     Axis7.energy,
     Axis7.stability,
