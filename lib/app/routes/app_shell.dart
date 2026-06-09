@@ -56,6 +56,8 @@ class _BottomNav extends StatelessWidget {
     );
   }
 
+  /// go_router はボトムナビの選択状態を持たないため、パスから逆引きしてアクティブタブを決める。
+  /// startsWith で判定することでネストルート（例: /insights/detail）にも対応できる。
   int _indexFromLocation(String location) {
     if (location.startsWith(AppRoute.insights)) {
       return 1;
@@ -69,6 +71,7 @@ class _BottomNav extends StatelessWidget {
     return 0;
   }
 
+  /// タップされたインデックスをパスに変換する。AppRoute定数を参照することでパス変更時の修正を1箇所に集約する。
   String _locationFromIndex(int index) {
     switch (index) {
       case 1:
