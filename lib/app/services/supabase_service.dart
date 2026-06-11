@@ -43,5 +43,7 @@ class SupabaseService {
   }
 
   /// アプリ全体から参照するクライアントのショートカット。
-  static SupabaseClient get client => Supabase.instance.client;
+  static SupabaseClient get client {
+    return Supabase.instance.client;
+  }
 }
