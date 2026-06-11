@@ -9,8 +9,13 @@ class SupabaseService {
 
   /// アプリ起動時に1度だけ呼ぶ。
   static Future<void> initialize() async {
-    assert(_url.isNotEmpty, 'SUPABASE_URL が未設定です。--dart-define で渡してください。');
-    assert(_publishableKey.isNotEmpty, 'SUPABASE_ANON_KEY が未設定です。--dart-define で渡してください。');
+    // assert はリリースビルドで消えるため、StateError で確実に検知する
+    if (_url.isEmpty) {
+      throw StateError('SUPABASE_URL が未設定です。--dart-define で渡してください。');
+    }
+    if (_publishableKey.isEmpty) {
+      throw StateError('SUPABASE_ANON_KEY が未設定です。--dart-define で渡してください。');
+    }
 
     await Supabase.initialize(
       url: _url,
