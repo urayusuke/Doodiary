@@ -64,4 +64,7 @@ abstract final class AppStrings {
   static const String errorSaveFailed = '保存に失敗しました';
   static const String errorUnknown = '予期しないエラーが発生しました';
   static const String retryLabel = '再試行';
+
+  // ---- DB / API ----
+  static const String tableNameDiaryRecords = 'diary_records';
 }
