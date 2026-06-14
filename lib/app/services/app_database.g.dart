@@ -30,6 +30,7 @@ class $DiaryRecordsTableTable extends DiaryRecordsTable
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   static const VerificationMeta _recordedAtMeta = const VerificationMeta(
     'recordedAt',
@@ -274,7 +275,8 @@ class DiaryRecordsTableData extends DataClass
   /// アプリ内のフィルタは recordedAt で行うため、この値は直接使わない。
   final int rowId;
 
-  /// Supabase UUID。Supabase に同期する前は null になる。
+  /// Supabase UUID。saveLocally 時にクライアントで生成し、Supabase upsert の冪等キーとして使う。
+  /// UNIQUE 制約により insertOrReplace が真に機能し、重複 INSERT を防ぐ。
   final String? id;
 
   /// 記録日時。UTC で保存し、読み出し時にローカル時刻に変換する。

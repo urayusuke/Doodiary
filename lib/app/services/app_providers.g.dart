@@ -56,3 +56,57 @@ final class AppDatabaseProvider
 }
 
 String _$appDatabaseHash() => r'59cce38d45eeaba199eddd097d8e149d66f9f3e1';
+
+/// RecordRepository のシングルトンを提供する。
+/// appDatabase に依存するため、DB 接続と同じライフサイクルで保持する。
+
+@ProviderFor(recordRepository)
+final recordRepositoryProvider = RecordRepositoryProvider._();
+
+/// RecordRepository のシングルトンを提供する。
+/// appDatabase に依存するため、DB 接続と同じライフサイクルで保持する。
+
+final class RecordRepositoryProvider
+    extends
+        $FunctionalProvider<
+          RecordRepository,
+          RecordRepository,
+          RecordRepository
+        >
+    with $Provider<RecordRepository> {
+  /// RecordRepository のシングルトンを提供する。
+  /// appDatabase に依存するため、DB 接続と同じライフサイクルで保持する。
+  RecordRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'recordRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$recordRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<RecordRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  RecordRepository create(Ref ref) {
+    return recordRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(RecordRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<RecordRepository>(value),
+    );
+  }
+}
+
+String _$recordRepositoryHash() => r'6cea4e7e5b9f58483a30e20712cf9740bad495e1';

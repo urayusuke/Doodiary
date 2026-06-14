@@ -32,6 +32,32 @@ void main() {
       expect(results.first.moodSlider, 0.7);
     });
 
+    test('saveLocally 後は id が null でない', () async {
+      final record = DiaryRecord(
+        recordedAt: DateTime(2026, 6, 14, 10, 0),
+        moodSlider: 0.5,
+      );
+
+      await repository.saveLocally(record);
+
+      final results = await repository.fetchRecent(1);
+      expect(results.first.id, isNotNull);
+    });
+
+    test('id を指定して保存するとその id が使われる', () async {
+      const id = 'fixed-uuid-1234';
+      final record = DiaryRecord(
+        id: id,
+        recordedAt: DateTime(2026, 6, 14, 10, 0),
+        moodSlider: 0.5,
+      );
+
+      await repository.saveLocally(record);
+
+      final results = await repository.fetchRecent(1);
+      expect(results.first.id, id);
+    });
+
     test('isSynced は保存直後 false になる', () async {
       final record = DiaryRecord(
         recordedAt: DateTime(2026, 6, 14, 10, 0),
@@ -109,8 +135,8 @@ void main() {
     });
   });
 
-  group('watchToday', () {
-    test('今日の記録のみを Stream で流す', () async {
+  group('watchRecordsAt', () {
+    test('指定日の記録のみを Stream で流す', () async {
       final today = DiaryRecord(
         recordedAt: DateTime.now(),
         moodSlider: 0.5,
@@ -123,7 +149,7 @@ void main() {
       await repository.saveLocally(today);
       await repository.saveLocally(yesterday);
 
-      final records = await repository.watchToday().first;
+      final records = await repository.watchRecordsAt(DateTime.now()).first;
       expect(records.length, 1);
       expect(records.first.moodSlider, 0.5);
     });

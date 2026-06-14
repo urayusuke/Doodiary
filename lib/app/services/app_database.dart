@@ -16,8 +16,9 @@ class DiaryRecordsTable extends Table {
   /// アプリ内のフィルタは recordedAt で行うため、この値は直接使わない。
   IntColumn get rowId => integer().autoIncrement()();
 
-  /// Supabase UUID。Supabase に同期する前は null になる。
-  TextColumn get id => text().nullable()();
+  /// Supabase UUID。saveLocally 時にクライアントで生成し、Supabase upsert の冪等キーとして使う。
+  /// UNIQUE 制約により insertOrReplace が真に機能し、重複 INSERT を防ぐ。
+  TextColumn get id => text().nullable().unique()();
 
   /// 記録日時。UTC で保存し、読み出し時にローカル時刻に変換する。
   DateTimeColumn get recordedAt => dateTime()();
@@ -50,7 +51,25 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          // id カラムに UNIQUE 制約を追加。
+          // SQLite は ALTER COLUMN をサポートしないため、再作成ではなくインデックスで代替する。
+          await m.createIndex(
+            Index(
+              'diary_records_id_unique',
+              'CREATE UNIQUE INDEX IF NOT EXISTS diary_records_id_unique ON diary_records (id) WHERE id IS NOT NULL',
+            ),
+          );
+        }
+      },
+    );
+  }
 
   static QueryExecutor _openConnection() {
     return driftDatabase(name: 'doodiary');
